@@ -241,6 +241,8 @@ def main():
     print(f"target t_enc is {t_enc} steps")
 
     precision_scope = autocast if opt.precision == "autocast" else nullcontext
+    if device.type == 'cpu':
+        precision_scope = nullcontext # have to use f32 if not using cuda
     with torch.no_grad():
         with precision_scope("cpu"):
             with model.ema_scope():

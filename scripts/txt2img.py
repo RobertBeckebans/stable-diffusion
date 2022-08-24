@@ -279,6 +279,8 @@ def main():
         start_code = torch.randn([opt.n_samples, opt.C, opt.H // opt.f, opt.W // opt.f], device=device)
 
     precision_scope = autocast if opt.precision=="autocast" else nullcontext
+    if device.type == 'cpu':
+        precision_scope = nullcontext # have to use f32 if not using cuda
     with torch.no_grad():
         with precision_scope("cpu"):
             with model.ema_scope():

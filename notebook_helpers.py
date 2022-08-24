@@ -120,6 +120,7 @@ def get_cond(mode, selected_path):
 
         #if torch.cuda.is_available():
         #     c = c.to(torch.device("cuda"))
+        c = c.to(torch.device("cpu"))
         example["LR_image"] = c
         example["image"] = c_up
 
